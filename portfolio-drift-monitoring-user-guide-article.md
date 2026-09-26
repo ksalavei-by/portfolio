@@ -1,4 +1,6 @@
-# What's new: Portfolio Drift Monitoring
+# Portfolio Drift Monitoring
+
+*Writing sample: User guide*
 
 ## Overview
 
