@@ -1,6 +1,6 @@
 # Internal Design Specification: Dynamic Wear-Leveling Controller
 
-*Writing sample — internal engineering documentation*
+*Writing sample: Internal engineering documentation*
 
 **Document classification:** Internal Use Only
 **Distribution:** Flash Controller Engineering, Firmware Integration, Design Verification
