@@ -117,4 +117,4 @@ This article provides general implementation guidance to support client planning
 
 ---
 
-*This document is a writing samle based on original document.It does not describe or disclose any real product, network, or confidential information.*
+*This document is a writing samle based on original document. It does not describe or disclose any real product, network, or confidential information.*
