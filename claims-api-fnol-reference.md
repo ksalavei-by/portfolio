@@ -1,4 +1,6 @@
-# Claims API reference: Submit First Notice of Loss
+# Submit First Notice of Loss
+
+*Writing sample: Claims API reference*
 
 ## Overview
 
