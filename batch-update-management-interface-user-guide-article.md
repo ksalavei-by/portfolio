@@ -2,63 +2,72 @@
 
 ## Overview
 
-The Batch Update Management interface gives you a single screen where you can review, filter, and act on pending updates to your scheduled batch jobs, without opening each job individually. Use it to adjust run times ahead of a holiday, pause a group of jobs during maintenance, or check which jobs changed recently.
+The **Batch Update Management** interface provides a single screen for reviewing, filtering, and updating scheduled batch jobs. You can use it to change run times, pause jobs during maintenance, or review recent changes without opening each job individually.
 
-This article describes what's new, where to find the interface, and how to use its main features.
+This article explains how to open Batch Update Management and use its main features.
 
----
+## What you can do
 
-## Why we added this feature
+With Batch Update Management, you can:
 
-Previously, to review or update multiple batch jobs, you had to open each job's settings one at a time. This approach works for a single job, but it's slow when you need to, for example, pause 15 jobs before a maintenance window or check which jobs changed in the last week. Batch Update Management brings these multi-job tasks into a single screen with filtering, sorting, and bulk actions.
+- View multiple batch jobs in one table.
+- Filter and sort jobs by status, modification date, or job group.
+- Apply an action to multiple jobs at the same time.
+- Review changes made through the interface.
 
----
+## Open Batch Update Management
 
-## Where to find it
+1. Go to **Batch Manager** > **Update Management**.
+2. If **Update Management** isn't available, ask your administrator to enable **Batch Update Management (View/Edit)** under **Settings** > **Role Permissions**.
 
-Go to **Batch Manager** > **Update Management** in the navigation menu. If you don't see this option, ask your administrator to enable it for your role under **Settings** > **Role Permissions** > **Batch Update Management (View/Edit)**.
+## View your jobs
 
----
-
-## Use the interface
-
-### View your jobs
-
-When you open Update Management, you see a table that lists every batch job you have permission to view.
+When you open Update Management, the table lists the batch jobs that you have permission to view.
 
 | Column | Description |
 |---|---|
 | **Job name** | The name of the scheduled batch job. |
-| **Status** | The job's current status: Scheduled, Running, Held, Failed, or Disabled. |
-| **Last modified** | The date, time, and user who last changed the job's configuration. |
-| **Next run** | The job's next scheduled run time, based on its current configuration. |
-| **Dependencies** | Indicates whether the job has predecessor jobs configured. |
+| **Status** | The current job status: **Scheduled**, **Running**, **Held**, **Failed**, or **Disabled**. |
+| **Last modified** | The date, time, and user associated with the most recent configuration change. |
+| **Next run** | The next scheduled run time based on the current configuration. |
+| **Dependencies** | Indicates whether predecessor jobs are configured for the job. |
 
-### Filter and sort the list
+## Filter and sort jobs
 
-Use the filter bar above the table to narrow the list by **Status**, **Last modified** date range, or **Job group**. Select any column header to sort the list. For example, sort by **Last modified** to see everything that changed since your last review.
+Use the filter bar above the table to filter jobs by:
 
-### Select and update multiple jobs
+- **Status**
+- **Last modified** date range
+- **Job group**
 
-1. Select the checkbox next to each job that you want to update, or select the checkbox in the table header to select every job in the current filtered view.
-2. Select **Bulk actions** in the toolbar above the table.
-3. Select an action: **Pause selected**, **Resume selected**, **Reschedule selected**, or **Reassign owner**.
-4. If you select **Reschedule selected**, enter a new run time or an offset (for example, "delay by 2 hours") to apply to every selected job.
-5. Review the confirmation summary, which lists the jobs the action affects, and then select **Apply**.
+Select a column heading to sort the list. For example, sort by **Last modified** to find jobs that changed since your previous review.
 
-### Review recent changes
+## Update multiple jobs
 
-Select the **Change history** tab at the top of the screen to see a chronological list of updates made through this interface, including who made each change and what they changed. Use this tab to confirm that a bulk update applied correctly or to investigate an unexpected job status.
+1. Select the checkbox next to each job that you want to update. To select all jobs in the current filtered view, select the checkbox in the table header.
+2. Select **Bulk actions** in the toolbar.
+3. Select an action:
+   - **Pause selected**
+   - **Resume selected**
+   - **Reschedule selected**
+   - **Reassign owner**
+4. If you selected **Reschedule selected**, enter a new run time or an offset, such as `2 hours`, to apply to all selected jobs.
+5. Review the confirmation summary.
+6. Select **Apply**.
 
----
+The confirmation summary lists the jobs affected by the action.
+
+## Review recent changes
+
+Select the **Change history** tab to view changes made through Batch Update Management.
+
+The change history lists updates in chronological order and includes who made each change and what they changed. Use this information to verify that a bulk update was applied correctly or to investigate an unexpected job status.
 
 ## Tips
 
-- Before a scheduled review meeting, use the **Last modified** filter to quickly find everything that changed since the last one.
-- When you use **Reschedule selected** with an offset (for example, "+2 hours") instead of a fixed time, each job shifts relative to its own original schedule. This option is useful when the jobs in the group don't all run at the same time.
-- Bulk actions respect existing job dependencies. Pausing a predecessor job doesn't automatically pause its dependents, so review the **Dependencies** column before you assume that a bulk pause covers an entire chain.
-
----
+- Before a scheduled review, use the **Last modified** filter to find jobs modified since the previous review.
+- When you use **Reschedule selected** with an offset, such as `+2 hours`, the offset is applied to each job's existing schedule. This option is useful when selected jobs have different run times.
+- Bulk actions respect existing job dependencies. Pausing a predecessor job doesn't automatically pause its dependent jobs. Review the **Dependencies** column before pausing jobs in a dependency chain.
 
 ## Related topics
 
@@ -68,4 +77,4 @@ Select the **Change history** tab at the top of the screen to see a chronologica
 
 ---
 
-*This document is an original writing sample. It does not describe or disclose any real product, network, or confidential information.*
+*This document is an original writing sample. It doesn't describe or disclose any real product, network, or confidential information.*
