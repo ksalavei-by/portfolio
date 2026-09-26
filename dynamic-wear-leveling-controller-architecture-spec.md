@@ -2,112 +2,151 @@
 
 *Writing sample — internal engineering documentation*
 
-**Document Classification:** Internal Use Only  
-**Distribution:** Flash Controller Engineering, Firmware Integration, Design Verification  
-**Author:** Katsiaryna Salavei  
-**Status:** Draft for engineering review  
+**Document classification:** Internal Use Only
+**Distribution:** Flash Controller Engineering, Firmware Integration, Design Verification
+**Author:** Katsiaryna Salavei
+**Status:** Draft for engineering review
 
 ---
 
-## Revision History
+## Revision history
 
-| Version | Date | Author | Summary of Change |
+| Version | Date | Author | Summary of change |
 |---|---|---|---|
 | 0.1 | [Sample date] | K. Salavei | Initial draft based on controller architecture design review |
-| 0.2 | [Sample date] | K. Salavei | Added garbage collection interaction notes per firmware team feedback |
+| 0.2 | [Sample date] | K. Salavei | Added garbage collection interaction notes based on firmware team feedback |
 
----
+## 1. Purpose and scope
 
-## 1. Purpose and Scope
+The **Dynamic Wear-Leveling Controller (DWLC)** is a firmware-facing hardware block that tracks program/erase (P/E) cycle counts for NAND flash blocks and ranks free blocks for write allocation.
 
-This document specifies the architecture of the **Dynamic Wear-Leveling Controller (DWLC)**, a firmware-facing hardware block responsible for tracking program/erase (P/E) cycle counts across NAND flash blocks and guiding block selection during write operations, so that wear is distributed evenly across the die rather than concentrated on frequently rewritten blocks.
+DWLC distributes write activity across blocks by ranking available blocks according to erase count. The Flash Translation Layer (FTL) retains final block-selection authority and can apply additional criteria, such as bad-block avoidance or thermal spreading.
 
-This specification is intended for engineers implementing or verifying flash translation layer (FTL) firmware, or integrating against the DWLC hardware interface. It assumes familiarity with baseline NAND flash concepts (blocks, pages, program/erase cycling) and does not repeat general NAND operation except where DWLC modifies standard behavior.
+This specification is intended for engineers who implement or verify FTL firmware or integrate firmware with the DWLC hardware interface.
 
----
+The specification assumes familiarity with NAND flash concepts, including blocks, pages, and program/erase cycles. It describes general NAND behavior only where that behavior affects DWLC operation.
 
 ## 2. Background
 
-NAND flash cells degrade with each program/erase cycle: as oxide layers wear from repeated electrical stress, cells become slower to program and, eventually, unreliable. Because blocks are erased and rewritten as a unit, uneven write patterns — for example, a filesystem repeatedly overwriting the same logical address — can wear a small subset of physical blocks far faster than the rest of the die, shortening the device's usable life well before most blocks approach their rated endurance.
+NAND flash cells degrade as program/erase cycles accumulate. Repeated electrical stress can increase program and erase latency and eventually reduce cell reliability.
 
-DWLC addresses this by maintaining a per-block erase-count table and biasing block allocation during writes toward less-worn blocks, without requiring the flash translation layer to implement its own wear tracking from scratch.
+Because NAND blocks are erased as a unit, uneven write patterns can cause some physical blocks to accumulate erase cycles faster than others. For example, repeatedly updating the same logical address can cause a small subset of physical blocks to wear faster than the rest of the die.
 
----
+DWLC maintains an erase-count value for each tracked block and uses those values to rank free blocks for allocation. This allows the FTL to use hardware-maintained wear information without implementing its own erase-count tracking.
 
-## 3. Functional Overview
+## 3. Functional overview
 
-At a high level, DWLC sits between the FTL's write-allocation request and the physical block-selection logic:
+DWLC operates between the FTL's write-allocation request and the block-selection logic.
 
+```text
+[FTL write request] → [DWLC: candidate block ranking] → [Block allocator] → [NAND array]
+                                  ↑
+                        [Per-block erase-count table]
 ```
-[FTL Write Request] → [DWLC: Candidate Block Ranking] → [Block Allocator] → [NAND Array]
-                              ↑
-                    [Per-Block Erase Count Table]
-```
 
-When the FTL requests a free block for a write operation, DWLC ranks currently available free blocks by erase count and returns a ranked candidate list rather than a single fixed choice, allowing the FTL to apply its own secondary criteria (such as bad-block avoidance or bin-level thermal spreading) before making the final selection.
+When the FTL requests a free block, DWLC ranks the available free blocks by erase count and returns a ranked candidate list.
 
----
+The FTL uses the candidate list as a recommendation and can apply additional selection criteria before choosing a block. For example, the FTL can deprioritize a candidate because of bad-block handling or thermal distribution requirements.
 
-## 4. Wear-Leveling Modes
+## 4. Wear-leveling modes
 
-| Mode | Description | Typical Use |
+DWLC supports dynamic and static wear leveling.
+
+| Mode | Description | Typical use |
 |---|---|---|
-| **Dynamic wear leveling** | Applies ranking only to blocks already in the free pool (i.e., blocks that have been erased and are awaiting new writes). | Default mode; low overhead, addresses wear from actively rewritten data. |
-| **Static wear leveling** | Periodically relocates long-held, rarely rewritten data out of low-erase-count blocks, freeing those blocks to re-enter general circulation. | Enabled via `DWLC_STATIC_EN`; addresses wear imbalance caused by cold, rarely-updated data occupying otherwise healthy blocks. |
+| **Dynamic wear leveling** | Ranks blocks that are already in the free pool and available for new writes. | Default mode. Distributes wear among blocks that are actively reused. |
+| **Static wear leveling** | Relocates long-lived data from low-erase-count blocks so that those blocks can re-enter the free pool. | Addresses wear imbalance caused by cold data occupying blocks with relatively low erase counts. |
 
-Static wear leveling is triggered when the spread between the lowest and highest erase counts among all blocks exceeds a configurable threshold (`DWLC_STATIC_THRESHOLD`), not on a fixed schedule, to avoid unnecessary relocation overhead when wear is already well distributed.
+Dynamic wear leveling is enabled when the DWLC is enabled.
 
----
+Static wear leveling is enabled by `DWLC_STATIC_EN`. A static wear-leveling pass starts when the difference between the lowest and highest erase counts among tracked blocks exceeds `DWLC_STATIC_THRESHOLD`.
 
-## 5. Register Interface
+Static wear leveling isn't triggered on a fixed schedule. This prevents relocation when the erase-count distribution is already within the configured threshold.
 
-| Register | Address Offset | Access | Description |
-|---|---|---|---|
-| `DWLC_CTRL` | 0x00 | R/W | Bit 0: DWLC enable. Bit 1 (`DWLC_STATIC_EN`): enables static wear-leveling mode in addition to dynamic mode. |
-| `DWLC_STATIC_THRESHOLD` | 0x04 | R/W | Erase-count spread (in cycles) that triggers a static wear-leveling relocation pass. Default: 500. |
-| `DWLC_BLOCK_COUNT_TABLE_PTR` | 0x08 | R/W | Base address of the per-block erase-count table in controller SRAM. |
-| `DWLC_MAX_ERASE_COUNT` | 0x0C | R | Read-only; reports the highest erase count observed across all tracked blocks, for endurance telemetry. |
-| `DWLC_RELOCATION_COUNT` | 0x10 | R | Read-only; cumulative count of static wear-leveling relocations performed since last reset, for wear-amplification monitoring. |
+## 5. Register interface
 
----
+The following registers configure and report DWLC operation.
 
-## 6. Interaction with Garbage Collection
+| Register | Address offset | Access | Description |
+|---|---:|---|---|
+| `DWLC_CTRL` | `0x00` | R/W | Control register. Bit 0 enables DWLC. Bit 1 (`DWLC_STATIC_EN`) enables static wear leveling. |
+| `DWLC_STATIC_THRESHOLD` | `0x04` | R/W | Erase-count spread that triggers a static wear-leveling relocation pass. Default: `500` cycles. |
+| `DWLC_BLOCK_COUNT_TABLE_PTR` | `0x08` | R/W | Base address of the per-block erase-count table in controller SRAM. |
+| `DWLC_MAX_ERASE_COUNT` | `0x0C` | R | Highest erase count currently observed among tracked blocks. Used for endurance telemetry. |
+| `DWLC_RELOCATION_COUNT` | `0x10` | R | Cumulative number of static wear-leveling relocations performed since the last reset. Used to monitor wear-leveling overhead. |
 
-DWLC's candidate ranking and the FTL's garbage collection (GC) process operate independently but must be sequenced carefully: GC reclaims blocks containing stale/invalid pages and returns them to the free pool, at which point they become eligible for DWLC ranking like any other free block.
+### Control bits
 
-**Design note:** DWLC does not select GC victim blocks. Victim selection (which blocks to garbage-collect) remains entirely the FTL's responsibility, typically based on invalid-page ratio. DWLC only ranks blocks once they are already free. This separation keeps the two concerns — wear distribution and reclaiming space — independently testable.
+| Register | Bit | Name | Description |
+|---|---:|---|---|
+| `DWLC_CTRL` | 0 | — | `1` enables DWLC ranking. `0` disables DWLC ranking and returns block selection to the FTL. |
+| `DWLC_CTRL` | 1 | `DWLC_STATIC_EN` | `1` enables static wear leveling. `0` disables static wear leveling. |
 
----
+## 6. Interaction with garbage collection
 
-## 7. Verification Requirements
+DWLC ranking and FTL garbage collection (GC) perform separate functions.
 
-Design Verification should confirm the following before DWLC is signed off for integration:
+GC identifies blocks that can be reclaimed. After GC relocates valid pages and erases a reclaimed block, the block returns to the free pool. DWLC can then include the block in its candidate ranking.
 
-- [ ] Candidate ranking correctly orders free blocks by ascending erase count under dynamic mode
-- [ ] Static wear-leveling relocation triggers correctly when the erase-count spread exceeds `DWLC_STATIC_THRESHOLD`, and not before
-- [ ] `DWLC_MAX_ERASE_COUNT` and `DWLC_RELOCATION_COUNT` update correctly and persist across the relevant test scenarios
-- [ ] DWLC ranking behavior is unaffected by concurrent GC activity reclaiming blocks into the free pool
-- [ ] Disabling `DWLC_CTRL` Bit 0 correctly falls back to FTL-default block selection without ranking bias
+DWLC doesn't select GC victim blocks. Victim selection remains the responsibility of the FTL and can use criteria such as the number of invalid pages.
 
----
+This separation allows wear distribution and space reclamation to be implemented and verified independently.
 
-## 8. Firmware Integration Notes
+### Processing sequence
 
-The FTL should treat DWLC's candidate list as a ranked suggestion, not a mandate — the FTL retains final block-selection authority and may deprioritize a top-ranked candidate for other reasons (e.g., a suspected marginal block pending retirement). Firmware involvement is expected for:
+The expected sequence is:
 
-- Reading `DWLC_MAX_ERASE_COUNT` periodically for device health/endurance telemetry reporting
-- Configuring `DWLC_STATIC_THRESHOLD` at initialization if a platform-specific value is required, rather than relying on the default
-- Monitoring `DWLC_RELOCATION_COUNT` to detect abnormal relocation frequency, which may indicate a workload pattern causing excessive wear-leveling overhead
+1. The FTL selects a block for garbage collection.
+2. GC relocates any valid pages.
+3. The FTL erases the reclaimed block.
+4. The block enters the free pool.
+5. DWLC includes the block in subsequent candidate rankings.
 
----
+## 7. Verification requirements
+
+Design Verification must verify the following behaviors before DWLC integration sign-off:
+
+- [ ] In dynamic mode, candidate blocks are ranked in ascending order of erase count.
+- [ ] Static wear-leveling relocation starts when the erase-count spread exceeds `DWLC_STATIC_THRESHOLD`.
+- [ ] Static wear-leveling relocation doesn't start when the erase-count spread is equal to or below `DWLC_STATIC_THRESHOLD`.
+- [ ] `DWLC_MAX_ERASE_COUNT` reports the highest erase count among tracked blocks.
+- [ ] `DWLC_RELOCATION_COUNT` increments correctly for static wear-leveling relocations.
+- [ ] `DWLC_RELOCATION_COUNT` resets according to the defined reset behavior.
+- [ ] DWLC ranking remains correct while GC adds reclaimed blocks to the free pool.
+- [ ] Clearing `DWLC_CTRL` bit 0 disables DWLC ranking and restores FTL-default block selection.
+- [ ] Enabling and disabling static wear leveling through `DWLC_STATIC_EN` produces the expected behavior.
+
+## 8. Firmware integration
+
+The FTL must treat the DWLC candidate list as a recommendation. The FTL retains final block-selection authority and can deprioritize a candidate when other selection criteria apply.
+
+Firmware is responsible for:
+
+- Reading `DWLC_MAX_ERASE_COUNT` periodically for device health and endurance telemetry.
+- Configuring `DWLC_STATIC_THRESHOLD` during initialization when the platform requires a value other than the default.
+- Monitoring `DWLC_RELOCATION_COUNT` to identify unusually frequent static wear-leveling activity.
+- Applying FTL-specific block-selection criteria after receiving the DWLC candidate list.
+- Maintaining existing bad-block handling independently of DWLC ranking.
+
+A high relocation count can indicate a workload that causes significant wear-leveling activity. Firmware should use this value as a diagnostic metric rather than as a direct indication of device failure.
 
 ## 9. Glossary
 
-- **Program/Erase (P/E) Cycle:** One complete write-then-erase cycle on a NAND block; each cycle contributes to physical wear on the cell.
-- **Wear Leveling:** The practice of distributing write/erase activity evenly across all available blocks, to avoid premature failure of frequently-used blocks.
-- **Garbage Collection (GC):** The process of reclaiming blocks containing stale (invalidated) data by relocating any still-valid pages elsewhere and erasing the block for reuse.
-- **Flash Translation Layer (FTL):** The firmware layer that maps logical addresses used by the host system to physical NAND block/page locations, and manages wear leveling, garbage collection, and bad-block handling.
+**Program/erase (P/E) cycle**
+A program and erase operation sequence applied to a NAND block. P/E cycles contribute to NAND cell wear.
+
+**Wear leveling**
+A technique for distributing erase activity across physical NAND blocks to reduce uneven wear.
+
+**Garbage collection (GC)**
+The process of reclaiming blocks that contain invalid data. GC relocates valid pages, erases the block, and returns it to the free pool.
+
+**Flash Translation Layer (FTL)**
+The firmware layer that maps host logical addresses to physical NAND locations and manages functions such as block allocation, garbage collection, wear leveling, and bad-block handling.
+
+**Erase count**
+The number of erase operations recorded for a physical NAND block.
 
 ---
 
-*This document is an original writing sample. It does not describe or disclose any real product, architecture, or confidential information.*
+*This document is an original writing sample. It doesn't describe or disclose any real product, architecture, or confidential information.*
