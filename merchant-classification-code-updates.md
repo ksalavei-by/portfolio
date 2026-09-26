@@ -2,17 +2,11 @@
 
 *Writing sample: Client Implementation Notice*
 
-**Bulletin Type:** Client Implementation Notice
-**Publication Date:** [Sample — Month Year]
-**Effective Date:** [Sample — Month Year]
-**Distribution:** Acquirers, Issuers, Client Implementation Teams, Reporting and Reconciliation Teams
-**Classification:** Client-Facing — General Distribution
-
 ---
 
 ## Purpose
 
-This bulletin notifies clients of upcoming updates to the merchant classification code set and describes the actions clients should take to prepare their systems and processes.
+This article notifies clients of upcoming updates to the merchant classification code set and describes the actions clients should take to prepare their systems and processes.
 
 ## Scope
 
