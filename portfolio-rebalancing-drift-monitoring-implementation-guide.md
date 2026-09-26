@@ -1,9 +1,9 @@
 # Implementation Guide: Portfolio Rebalancing Drift Monitoring
 
-**Document Type:** Implementation Guide (Writing Sample)
-**Distribution:** Portfolio Managers, Portfolio Operations, Client Implementation Teams
-**Author:** Katsiaryna Salavei
-**Status:** Portfolio writing sample
+**Document Type:** Implementation Guide (Writing Sample)  
+**Distribution:** Portfolio Managers, Portfolio Operations, Client Implementation Teams  
+**Author:** Katsiaryna Salavei  
+**Status:** Portfolio writing sample  
 
 ---
 
