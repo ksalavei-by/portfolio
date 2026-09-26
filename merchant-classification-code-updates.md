@@ -1,9 +1,9 @@
 # Client Implementation Article: Merchant Classification Code Updates
 
-**Document Type:** Client Implementation Overview
-**Publication Date:** 09/2026
-**Author:** Katsiaryna Salavei
-**Status:** Portfolio writing sample
+**Document Type:** Client Implementation Overview  
+**Publication Date:** 09/2026  
+**Author:** Katsiaryna Salavei  
+**Status:** Portfolio writing sample  
 
 ---
 
