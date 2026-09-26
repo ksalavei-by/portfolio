@@ -1,118 +1,91 @@
 # Merchant Classification Code Updates
 
-*Writing sample: Client Implementation Article*
+*Writing sample — Client implementation article*
 
----
+## In brief
 
-## Audience
+The merchant classification code set is being updated to improve merchant categorization across authorization, reporting, and reconciliation workflows.
 
-This article is intended for client implementation teams, integration developers, reporting analysts, reconciliation teams, and operational support staff at organizations that process, store, or report on merchant classification data.
+The update includes:
 
-Use this article to understand:
+- Clarified descriptions for six existing classification values.
+- Four new classification codes for business types that aren't adequately represented in the current code set.
+- Retirement of one legacy code and introduction of two replacement codes.
 
-- What is changing
-- Which internal systems may be affected
-- What preparation steps to consider
-- What to test before the change takes effect
-- How to brief support and reporting teams
+The update doesn't change the use of merchant classification codes in authorization or clearing message formats, except for the valid values and their descriptions.
 
----
+Clients might be affected if their systems validate, store, transform, display, or report merchant classification data. Clients that pass classification codes through without applying validation or business logic might require little or no change.
 
-## In Brief
+## What is changing
 
-A payment platform is expanding and refining its merchant classification code set to improve the accuracy of merchant categorization across authorization, reporting, and reconciliation workflows. Several existing classification values will be clarified, a small number of new values will be introduced for previously underrepresented business types, and one legacy value will be retired in favor of two more specific replacements.
-
-This change may affect any client system that stores, validates, transforms, displays, or reports on merchant classification values. Clients whose systems treat classification codes as opaque pass-through data, without applying validation or business logic, may see limited impact.
-
----
-
-## Why This Change Is Happening
-
-Merchant classification values are used throughout the payment ecosystem to categorize transaction activity by business type. Over time, certain classification values have become too broad to reflect meaningful differences in merchant activity, which can affect the accuracy of portfolio analysis, risk review, and reporting.
-
-This update narrows several overly broad classifications and introduces new values so that merchant activity can be categorized more precisely, without changing how underlying transactions are authorized or cleared.
-
----
-
-## What Is Changing
-
-| Change Type | Description |
+| Change | Description |
 |---|---|
-| **Clarified descriptions** | Six existing classification values will have updated descriptive text to better reflect current merchant activity, with no change to the code itself. |
-| **New values** | Four new classification codes will be introduced to cover business types not previously well represented in the existing code set. |
-| **Retired value** | One legacy code will be retired and replaced by two new, more specific codes; the legacy code will continue to be accepted for a defined transition period. |
+| **Updated descriptions** | Descriptions for six existing classification values are being updated. The codes remain unchanged. |
+| **New codes** | Four new classification codes are being added for business types not adequately represented in the current code set. |
+| **Retired code** | One legacy code is being retired and replaced by two more specific codes. The legacy code remains valid during the defined transition period. |
 
-No change is being made to how classification codes are used in authorization or clearing message formats, except for the set of valid values and their descriptions.
+## Implementation considerations
 
----
+### Review validation and reference data
 
-## Client Impact by Role
+Identify validation rules, lookup tables, database constraints, and other configuration that reference merchant classification codes.
 
-### Systems that submit transaction or merchant data
-Confirm that onboarding and transaction-submission systems can accept the new classification values, and that any client-side validation logic (allow-lists, format checks, dropdown menus) is updated to include them.
+Update these components to support the new codes before the effective date.
 
-### Systems that receive or store classification data
-Confirm that updated and new values are accepted, stored without truncation, and passed through to downstream systems unchanged.
+### Review the retiring code
 
-### Reporting and analytics teams
-Review any reports, dashboards, or lookup tables that reference classification codes by value or description, particularly for the retiring code, to ensure continued accuracy once the transition period ends.
+Identify systems that reference the retiring code. Update these systems to support the two replacement codes before the transition period ends.
 
-### Reconciliation teams
-Confirm that reconciliation logic matching on classification code or description continues to function correctly for both the clarified and newly introduced values.
+If your system receives the retiring code during the transition period, confirm that it continues to process the value as expected.
 
-### Operational support teams
-Update internal knowledge-base articles or support scripts that reference classification code descriptions, so front-line staff can correctly interpret merchant activity during client inquiries.
+### Review downstream systems
 
-### Clients using a processor or hosted platform
-Coordinate with your processor or platform provider to confirm whether any client-specific configuration, mapping table, or release step is required on their side.
+Confirm that downstream and third-party systems can receive and process the new and updated classification values.
 
----
+This might include:
 
-## Implementation Considerations
+- Reporting feeds
+- Analytics platforms
+- Reconciliation systems
+- Dashboards
+- Processor- or platform-hosted services
 
-1. **Inventory current usage.** Identify every system that references merchant classification codes or their descriptions.
-2. **Review validation logic.** Where classification values are restricted to a fixed list (in code, configuration, or a database table), confirm the list will be updated before the change takes effect.
-3. **Plan for the retiring code's transition period.** Systems that hard-code the legacy value should be updated to recognize its two replacements before the transition period ends; systems that treat the value dynamically may need no change.
-4. **Check downstream and third-party dependencies.** Confirm that any external reporting feed, dashboard, or processor-hosted service can accept the new and clarified values.
-5. **Update documentation and training.** Refresh internal support materials and onboarding guides that reference classification code descriptions.
+Coordinate with your processor or platform provider if client-specific configuration or deployment steps are required.
 
----
+### Update documentation and training
 
-## Testing Considerations
+Update internal documentation, support procedures, onboarding materials, and training that reference affected classification codes or descriptions.
 
-Testing is recommended for any client system that validates, stores, transforms, displays, or reports on classification data. Testing should confirm that:
+## Testing considerations
 
-- New classification values are accepted without rejection
-- Clarified descriptions display correctly wherever descriptions (not just codes) are shown to users
-- The retiring code is still accepted during the transition period, and its replacements are accepted from day one
-- Reports and reconciliation outputs reflect the updated values as expected
-- Support tooling correctly displays the updated descriptions for the codes it surfaces
+Test any system that validates, stores, transforms, displays, or reports merchant classification data.
 
-Clients whose systems pass classification codes through without applying business logic may not need formal testing, but should still confirm no internal workflow assumes the legacy code will remain valid indefinitely.
+Confirm that:
 
----
+- New classification codes are accepted.
+- Updated descriptions display correctly where descriptions are used.
+- The retiring code remains supported during the transition period.
+- The two replacement codes are supported when they become available.
+- Reports and reconciliation processes handle the updated values correctly.
+- Downstream systems receive and process the values as expected.
+- Support and operational tools display the correct classification descriptions.
 
-## Client Checklist
+If your systems pass classification codes through without applying validation or business logic, formal testing might not be required. However, confirm that no workflow depends on the retiring code remaining valid after the transition period.
 
-**Before the update:**
-- [ ] Identify systems that reference merchant classification codes or descriptions
-- [ ] Update validation rules and reference/lookup tables
-- [ ] Confirm processor or platform-provider readiness, if applicable
-- [ ] Brief reporting, reconciliation, and support teams
-- [ ] Schedule testing for affected systems
+## Client checklist
 
-**After the update:**
-- [ ] Monitor for unexpected validation failures or rejected values
-- [ ] Confirm reports and reconciliation outputs reflect the new and clarified values correctly
-- [ ] Track internal use of the retiring code ahead of the transition-period deadline
-- [ ] Retain implementation notes for future reference
+### Before the update
+
+- [ ] Identify systems and processes that use merchant classification codes or descriptions.
+- [ ] Review validation rules, lookup tables, and reference data.
+- [ ] Add support for the new classification codes.
+- [ ] Update systems that reference the retiring code.
+- [ ] Confirm downstream and processor or platform-provider readiness.
+- [ ] Update reporting, reconciliation, and support documentation.
+- [ ] Test affected systems.
+
+> **Note**: If you're unsure whether your systems are affected, review how your organization uses merchant classification data and coordinate with your processor or platform provider, as applicable.
 
 ---
 
-## Additional Guidance
-
-This article provides general implementation guidance to support client planning and does not replace an organization's own technical analysis or release-readiness process. Clients uncertain whether they are affected should review their own use of merchant classification data and, where applicable, coordinate with their processor or platform provider.
-
----
-
-*This document is an original writing sample. It does not describe or disclose any real product, network, or confidential information.*
+*This document is an original writing sample. It doesn't describe or disclose any real product, network, or confidential information.*
