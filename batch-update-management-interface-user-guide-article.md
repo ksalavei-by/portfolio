@@ -1,4 +1,4 @@
-# What's new: Batch Update Management interface
+# What's new: Batch Update Management Interface
 
 ## Overview
 
