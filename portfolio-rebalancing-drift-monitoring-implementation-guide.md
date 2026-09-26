@@ -1,8 +1,6 @@
 # Implementation Guide: Portfolio Rebalancing Drift Monitoring
 
 **Document Type:** Implementation Guide (Writing Sample)
-**Publication Date:** [*No date, since this is a sample article*]
-**Effective Date:** [*No date, since this is a sample article*]
 **Distribution:** Portfolio Managers, Portfolio Operations, Client Implementation Teams
 **Author:** Katsiaryna Salavei
 **Status:** Portfolio writing sample
@@ -11,7 +9,7 @@
 
 ## 1. Summary of Change
 
-This release introduces **automated drift monitoring** for portfolio rebalancing, allowing portfolio managers to see, in real time, how far a portfolio's actual asset allocation has moved from its target allocation — and to receive an alert when that drift crosses a configurable threshold.
+This release introduces **automated drift monitoring** for portfolio rebalancing, allowing portfolio managers to see, in real time, how far a portfolio's actual asset allocation has moved from its target allocation and to receive an alert when that drift crosses a configurable threshold.
 
 Previously, allocation drift was reviewed manually, typically on a fixed schedule (e.g., weekly or monthly), meaning a portfolio could sit meaningfully out of alignment with its target allocation between review cycles. With this enhancement, drift is calculated continuously as market values change, and portfolio managers are notified as soon as a position or asset class breaches its allowed tolerance band.
 
