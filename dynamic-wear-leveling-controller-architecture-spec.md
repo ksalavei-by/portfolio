@@ -2,11 +2,6 @@
 
 *Writing sample: Internal engineering documentation*
 
-**Document classification:** Internal Use Only
-**Distribution:** Flash Controller Engineering, Firmware Integration, Design Verification
-**Author:** Katsiaryna Salavei
-**Status:** Draft for engineering review
-
 ---
 
 ## Table of contents
