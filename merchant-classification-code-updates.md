@@ -1,7 +1,6 @@
 # Client Implementation Article: Merchant Classification Code Updates
 
 **Document Type:** Client Implementation Overview  
-**Publication Date:** 09/2026  
 **Author:** Katsiaryna Salavei  
 **Status:** Portfolio writing sample  
 
@@ -45,7 +44,7 @@ This update narrows several overly broad classifications and introduces new valu
 | **New values** | Four new classification codes will be introduced to cover business types not previously well represented in the existing code set. |
 | **Retired value** | One legacy code will be retired and replaced by two new, more specific codes; the legacy code will continue to be accepted for a defined transition period. |
 
-No change is being made to how classification codes are used in authorization or clearing message formats — only to the set of valid values and their descriptions.
+No change is being made to how classification codes are used in authorization or clearing message formats, except for the set of valid values and their descriptions.
 
 ---
 
@@ -73,7 +72,7 @@ Coordinate with your processor or platform provider to confirm whether any clien
 
 ## Implementation Considerations
 
-1. **Inventory current usage.** Identify every system — onboarding, transaction processing, reporting, reconciliation, support tooling — that references merchant classification codes or their descriptions.
+1. **Inventory current usage.** Identify every system that references merchant classification codes or their descriptions.
 2. **Review validation logic.** Where classification values are restricted to a fixed list (in code, configuration, or a database table), confirm the list will be updated before the change takes effect.
 3. **Plan for the retiring code's transition period.** Systems that hard-code the legacy value should be updated to recognize its two replacements before the transition period ends; systems that treat the value dynamically may need no change.
 4. **Check downstream and third-party dependencies.** Confirm that any external reporting feed, dashboard, or processor-hosted service can accept the new and clarified values.
@@ -118,4 +117,4 @@ This article provides general implementation guidance to support client planning
 
 ---
 
-*This document is a writing samle based on original document. Fictional content created to demonstrate documentation structure and style for payment-technology client communications. It does not describe or disclose any real product, network, or confidential information.*
+*This document is a writing samle based on original document.It does not describe or disclose any real product, network, or confidential information.*
