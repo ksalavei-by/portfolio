@@ -132,20 +132,20 @@ A high relocation count can indicate a workload that causes significant wear-lev
 
 ## 9. Glossary
 
+**Erase count**
+The number of erase operations recorded for a physical NAND block.
+
+**Flash Translation Layer (FTL)**
+The firmware layer that maps host logical addresses to physical NAND locations and manages functions such as block allocation, garbage collection, wear leveling, and bad-block handling.
+
+**Garbage collection (GC)**
+The process of reclaiming blocks that contain invalid data. GC relocates valid pages, erases the block, and returns it to the free pool.
+
 **Program/erase (P/E) cycle**
 A program and erase operation sequence applied to a NAND block. P/E cycles contribute to NAND cell wear.
 
 **Wear leveling**
 A technique for distributing erase activity across physical NAND blocks to reduce uneven wear.
-
-**Garbage collection (GC)**
-The process of reclaiming blocks that contain invalid data. GC relocates valid pages, erases the block, and returns it to the free pool.
-
-**Flash Translation Layer (FTL)**
-The firmware layer that maps host logical addresses to physical NAND locations and manages functions such as block allocation, garbage collection, wear leveling, and bad-block handling.
-
-**Erase count**
-The number of erase operations recorded for a physical NAND block.
 
 ---
 
