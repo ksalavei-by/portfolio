@@ -1,11 +1,7 @@
-> **Writing sample:** This document is an original piece written to demonstrate technical documentation style and structure for payment-technology client communications. The update, systems, and details described are entirely fictional and do not represent any real product, network, or employer's confidential information.
-
----
-
 # Client Implementation Article: Merchant Classification Code Updates
 
 **Document Type:** Client Implementation Overview (Writing Sample)
-**Publication Date:** [Sample — Month Year]
+**Publication Date:** 09/2026
 **Author:** Katsiaryna Salavei, Senior Technical Writer
 **Status:** Portfolio writing sample
 
@@ -122,4 +118,4 @@ This article provides general implementation guidance to support client planning
 
 ---
 
-*Writing sample by Katsiaryna Salavei — Senior Technical Writer. This document is original, fictional content created to demonstrate documentation structure and style for payment-technology client communications. It does not describe or disclose any real product, network, or confidential information.*
+*This document is a writing samle based on original document. Fictional content created to demonstrate documentation structure and style for payment-technology client communications. It does not describe or disclose any real product, network, or confidential information.*
