@@ -1,6 +1,6 @@
 # What's new: Batch Update Management interface
 
-*Writing sample — User Guide article*
+*User Guide article*
 
 ---
 
