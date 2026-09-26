@@ -1,8 +1,6 @@
-# Client Implementation Article: Merchant Classification Code Updates
+# Merchant Classification Code Updates
 
-**Document Type:** Client Implementation Overview  
-**Author:** Katsiaryna Salavei  
-**Status:** Portfolio writing sample  
+*Writing sample: Client Implementation Article*
 
 ---
 
