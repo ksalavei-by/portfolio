@@ -1,5 +1,7 @@
 # Batch Update Management Interface
 
+*Writing sample: User guide*
+
 ## Overview
 
 The **Batch Update Management** interface provides a single screen for reviewing, filtering, and updating scheduled batch jobs. You can use it to change run times, pause jobs during maintenance, or review recent changes without opening each job individually.

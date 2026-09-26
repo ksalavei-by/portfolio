@@ -1,6 +1,6 @@
-# Internal Design Specification: Dynamic Wear-Leveling Controller
+# Dynamic Wear-Leveling Controller
 
-*Writing sample: Internal engineering documentation*
+*Writing sample: Internal design specification*
 
 ---
 
