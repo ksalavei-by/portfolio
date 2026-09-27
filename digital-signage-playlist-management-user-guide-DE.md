@@ -1,4 +1,4 @@
-# Was ist neu: Playlist-Verwaltung für Digital-Signage-Bildschirme
+# Playlist-Verwaltung für Digital-Signage-Bildschirme
 
 *Schreibprobe: Benutzerhandbuch-Artikel*
 
@@ -8,7 +8,7 @@ Mit der **Playlist-Verwaltung** erstellen und planen Sie Inhalte für Ihr gesamt
 
 In diesem Artikel erfahren Sie, wie Sie eine Playlist erstellen, Inhalte zeitlich planen und Bildschirmgruppen zuweisen.
 
-## Was Sie mit dieser Funktion tun können
+## Inhalte zentral verwalten und ausspielen
 
 Bisher mussten Inhalte für jeden Bildschirm einzeln hochgeladen und zeitlich geplant werden. Bei größeren Bildschirmnetzwerken entstand dadurch ein erheblicher manueller Aufwand, insbesondere wenn sich Inhalte häufig ändern, z. B. bei saisonalen Angeboten oder Tagesaktionen.
 
