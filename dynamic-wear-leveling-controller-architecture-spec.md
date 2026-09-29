@@ -23,8 +23,8 @@
 
 ## Revision history
 
-| Version | Date | Author | Summary of change |
-|---|---|---|---|
+| Version | Author | Summary of change |
+|---|---|---|
 | 0.1 | K. Salavei | Initial draft based on controller architecture design review |
 | 0.2 | K. Salavei | Added garbage collection interaction notes based on firmware team feedback |
 
