@@ -66,7 +66,7 @@ Clients whose systems treat classification codes as pass-through data, without a
 
 ### Validation and Reference Data
 
-Clients must identify validation rules, lookup tables, database constraints, and other configuration referencing merchant classification codes, and update these components to support the new codes before the effective date specified in this bulletin's header.
+Clients must identify validation rules, lookup tables, database constraints, and other configuration referencing merchant classification codes, and update these components to support the new codes before the effective date specified in the header of this notice.
 
 ### Retiring Code
 
@@ -124,7 +124,7 @@ Clients whose systems pass classification codes through without applying validat
 
 ## Additional Guidance
 
-This bulletin provides general implementation guidance for client planning and testing and does not replace an organization's own technical analysis, testing procedures, or release-readiness process.
+This notice provides general implementation guidance for client planning and testing and does not replace an organization's own technical analysis, testing procedures, or release-readiness process.
 
 Clients uncertain whether they are affected should review their use of merchant classification data and, where applicable, coordinate with their processor or platform provider.
 
