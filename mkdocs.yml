@@ -18,7 +18,6 @@ nav:
       - "NAND wear-leveling controller: design specification": dynamic-wear-leveling-controller-architecture-spec.md
       - "Digital signage playlists: user guide (German)": digital-signage-playlist-management-user-guide-DE.md
       - "Batch update management interface: user guide": batch-update-management-interface-user-guide-article.md
-      - "Claims API reference: submit first notice of loss": claims-api-fnol-reference.md
       - "Merchant classification code updates: client notice": merchant-classification-code-updates.md
   - How this site is built: how-this-site-is-built.md
 
