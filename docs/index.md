@@ -11,7 +11,6 @@ These are original writing samples. They are not based on any employer's confide
 | [NAND wear-leveling controller: design specification](dynamic-wear-leveling-controller-architecture-spec.md) | Engineering specification for a NAND flash wear-leveling controller, written for firmware and verification engineers: register interface, interaction with garbage collection, and verification requirements. | EN |
 | [Digital signage playlists: user guide](digital-signage-playlist-management-user-guide-DE.md) | Customer-facing user guide for creating and scheduling playlists and assigning them to screens. | DE |
 | [Batch update management interface: user guide](batch-update-management-interface-user-guide-article.md) | Task-based user guide for an interface that manages bulk batch jobs, written for business users. | EN |
-| [Claims API reference: submit first notice of loss](claims-api-fnol-reference.md) | Developer-facing reference for the endpoint that submits a first notice of loss in an insurance claims system. | EN |
 | [Merchant classification code updates: client notice](merchant-classification-code-updates.md) | Client implementation notice for a code-set change, with separate impact for each audience, testing requirements and a readiness checklist. | EN |
 
 ## Contact
