@@ -3,6 +3,8 @@ site_description: Documentation samples by Katsiaryna Salavei, Senior Technical 
 site_url: https://ksalavei-by.github.io/portfolio/
 repo_url: https://github.com/ksalavei-by/portfolio
 repo_name: ksalavei-by/portfolio
+extra_css:
+  - stylesheets/extra.css
 
 theme:
   name: material
