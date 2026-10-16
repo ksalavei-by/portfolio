@@ -3,21 +3,6 @@
 *Writing sample: Internal design specification*
 
 ---
-[Revision history](#revision-history)
-1. [Purpose and scope](#1-purpose-and-scope)
-2. [Background](#2-background)
-3. [Functional overview](#3-functional-overview)
-4. [Wear-leveling modes](#4-wear-leveling-modes)
-5. [Register interface](#5-register-interface)
-  - [Control bits](#control-bits)
-6. [Interaction with garbage collection](#6-interaction-with-garbage-collection)
-  - [Processing sequence](#processing-sequence)
-7. [Verification requirements](#7-verification-requirements)
-8. [Firmware integration](#8-firmware-integration)
-9. [Glossary](#9-glossary)
-
----
-
 ## Revision history
 
 | Version | Author | Summary of change |
