@@ -3,21 +3,18 @@
 *Writing sample: Internal design specification*
 
 ---
-
-## Table of contents
-
-- [Revision history](#revision-history)
-- [1. Purpose and scope](#1-purpose-and-scope)
-- [2. Background](#2-background)
-- [3. Functional overview](#3-functional-overview)
-- [4. Wear-leveling modes](#4-wear-leveling-modes)
-- [5. Register interface](#5-register-interface)
+[Revision history](#revision-history)
+1. [Purpose and scope](#1-purpose-and-scope)
+2. [Background](#2-background)
+3. [Functional overview](#3-functional-overview)
+4. [Wear-leveling modes](#4-wear-leveling-modes)
+5. [Register interface](#5-register-interface)
   - [Control bits](#control-bits)
-- [6. Interaction with garbage collection](#6-interaction-with-garbage-collection)
+6. [Interaction with garbage collection](#6-interaction-with-garbage-collection)
   - [Processing sequence](#processing-sequence)
-- [7. Verification requirements](#7-verification-requirements)
-- [8. Firmware integration](#8-firmware-integration)
-- [9. Glossary](#9-glossary)
+7. [Verification requirements](#7-verification-requirements)
+8. [Firmware integration](#8-firmware-integration)
+9. [Glossary](#9-glossary)
 
 ---
 
@@ -118,15 +115,15 @@ The expected sequence is:
 
 Design Verification must verify the following behaviors before DWLC integration sign-off:
 
-- [ ] In dynamic mode, candidate blocks are ranked in ascending order of erase count.
-- [ ] Static wear-leveling relocation starts when the erase-count spread exceeds `DWLC_STATIC_THRESHOLD`.
-- [ ] Static wear-leveling relocation doesn't start when the erase-count spread is equal to or below `DWLC_STATIC_THRESHOLD`.
-- [ ] `DWLC_MAX_ERASE_COUNT` reports the highest erase count among tracked blocks.
-- [ ] `DWLC_RELOCATION_COUNT` increments correctly for static wear-leveling relocations.
-- [ ] `DWLC_RELOCATION_COUNT` resets according to the defined reset behavior.
-- [ ] DWLC ranking remains correct while GC adds reclaimed blocks to the free pool.
-- [ ] Clearing `DWLC_CTRL` bit 0 disables DWLC ranking and restores FTL-default block selection.
-- [ ] Enabling and disabling static wear leveling through `DWLC_STATIC_EN` produces the expected behavior.
+- In dynamic mode, candidate blocks are ranked in ascending order of erase count.
+- Static wear-leveling relocation starts when the erase-count spread exceeds `DWLC_STATIC_THRESHOLD`.
+- Static wear-leveling relocation doesn't start when the erase-count spread is equal to or below `DWLC_STATIC_THRESHOLD`.
+- `DWLC_MAX_ERASE_COUNT` reports the highest erase count among tracked blocks.
+- `DWLC_RELOCATION_COUNT` increments correctly for static wear-leveling relocations.
+- `DWLC_RELOCATION_COUNT` resets according to the defined reset behavior.
+- DWLC ranking remains correct while GC adds reclaimed blocks to the free pool.
+- Clearing `DWLC_CTRL` bit 0 disables DWLC ranking and restores FTL-default block selection.
+- Enabling and disabling static wear leveling through `DWLC_STATIC_EN` produces the expected behavior.
 
 ## 8. Firmware integration
 
