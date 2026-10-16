@@ -106,21 +106,21 @@ Clients whose systems pass classification codes through without applying validat
 
 ### Before the Effective Date
 
-- [ ] Identify systems and processes that use merchant classification codes or descriptions.
-- [ ] Review validation rules, lookup tables, and reference data.
-- [ ] Add support for the new classification codes.
-- [ ] Update systems that reference the retiring code.
-- [ ] Confirm downstream and processor- or platform-provider readiness.
-- [ ] Update reporting, reconciliation, and support documentation.
-- [ ] Complete testing of affected systems.
+- Identify systems and processes that use merchant classification codes or descriptions.
+- Review validation rules, lookup tables, and reference data.
+- Add support for the new classification codes.
+- Update systems that reference the retiring code.
+- Confirm downstream and processor- or platform-provider readiness.
+- Update reporting, reconciliation, and support documentation.
+- Complete testing of affected systems.
 
 ### After the Effective Date
 
-- [ ] Monitor for validation errors or rejected classification values.
-- [ ] Confirm that reports and reconciliation processes reflect the updated values correctly.
-- [ ] Monitor use of the retiring code during the transition period.
-- [ ] Resolve unexpected processing or reporting issues.
-- [ ] Retain implementation and testing records per your organization's procedures.
+- Monitor for validation errors or rejected classification values.
+- Confirm that reports and reconciliation processes reflect the updated values correctly.
+- Monitor use of the retiring code during the transition period.
+- Resolve unexpected processing or reporting issues.
+- Retain implementation and testing records per your organization's procedures.
 
 ## Additional Guidance
 
